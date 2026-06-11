@@ -1,0 +1,86 @@
+{
+  "id": "demo-skull",
+  "title": "Demo — Skull & Bone Basics",
+  "course": "Demo",
+  "description": "A small sample quiz showing both question types: pin identification on the anterior skull plus a few multiple-choice questions.",
+  "created": "2026-06-11",
+  "optionCount": 5,
+  "questions": [
+    {
+      "id": "q001",
+      "type": "pin",
+      "topic": "Skull — Anterior",
+      "image": "images/skull_anterior.jpg",
+      "pin": { "x": 0.46, "y": 0.3 },
+      "answer": "Frontal bone"
+    },
+    {
+      "id": "q002",
+      "type": "pin",
+      "topic": "Skull — Anterior",
+      "image": "images/skull_anterior.jpg",
+      "pin": { "x": 0.64, "y": 0.575 },
+      "answer": "Zygomatic bone"
+    },
+    {
+      "id": "q003",
+      "type": "pin",
+      "topic": "Skull — Anterior",
+      "image": "images/skull_anterior.jpg",
+      "pin": { "x": 0.56, "y": 0.715 },
+      "answer": "Maxilla"
+    },
+    {
+      "id": "q004",
+      "type": "pin",
+      "topic": "Skull — Anterior",
+      "image": "images/skull_anterior.jpg",
+      "pin": { "x": 0.46, "y": 0.86 },
+      "answer": "Mandible"
+    },
+    {
+      "id": "q005",
+      "type": "pin",
+      "topic": "Skull — Anterior",
+      "image": "images/skull_anterior.jpg",
+      "pin": { "x": 0.475, "y": 0.55 },
+      "answer": "Nasal bone"
+    },
+    {
+      "id": "q006",
+      "type": "mc",
+      "topic": "Bone Tissue",
+      "prompt": "Which cell type is responsible for breaking down bone matrix during remodeling?",
+      "options": ["Osteoclast", "Osteoblast", "Osteocyte", "Osteogenic cell", "Chondrocyte"],
+      "correctIndex": 0,
+      "explanation": "Osteoclasts resorb bone; osteoblasts build new matrix, and osteocytes are mature maintainers trapped in lacunae."
+    },
+    {
+      "id": "q007",
+      "type": "mc",
+      "topic": "Bone Tissue",
+      "prompt": "The structural unit of compact bone, consisting of concentric lamellae around a central canal, is the:",
+      "options": ["Osteon", "Trabecula", "Lacuna", "Canaliculus", "Periosteum"],
+      "correctIndex": 0,
+      "explanation": "The osteon (Haversian system) is compact bone's repeating unit; trabeculae are the struts of spongy bone."
+    },
+    {
+      "id": "q008",
+      "type": "mc",
+      "topic": "Skull — Sutures",
+      "prompt": "Which suture joins the two parietal bones at the midline?",
+      "options": ["Sagittal suture", "Coronal suture", "Lambdoid suture", "Squamous suture", "Frontonasal suture"],
+      "correctIndex": 0,
+      "explanation": "The sagittal suture runs between the parietals; the coronal joins frontal to parietals, the lambdoid joins parietals to occipital."
+    },
+    {
+      "id": "q009",
+      "type": "mc",
+      "topic": "Skull — Sutures",
+      "prompt": "The coronal suture joins the frontal bone to which bones?",
+      "options": ["Parietal bones", "Temporal bones", "Occipital bone", "Sphenoid bone", "Nasal bones"],
+      "correctIndex": 0,
+      "explanation": "The coronal suture runs across the crown between the frontal bone and the two parietals."
+    }
+  ]
+}

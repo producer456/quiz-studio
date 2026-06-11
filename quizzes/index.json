@@ -1,0 +1,13 @@
+{
+  "quizzes": [
+    {
+      "id": "demo-skull",
+      "title": "Demo \u2014 Skull & Bone Basics",
+      "course": "Demo",
+      "description": "A small sample quiz showing both question types: pin identification on the anterior skull plus a few multiple-choice questions.",
+      "created": "2026-06-11",
+      "questionCount": 9,
+      "hasPins": true
+    }
+  ]
+}

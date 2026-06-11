@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Quiz Studio quiz.json",
+  "type": "object",
+  "required": ["id", "title", "questions"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "Folder name under quizzes/" },
+    "title": { "type": "string" },
+    "course": { "type": "string" },
+    "description": { "type": "string" },
+    "created": { "type": "string", "description": "YYYY-MM-DD" },
+    "optionCount": { "type": "integer", "minimum": 2, "maximum": 8, "default": 5, "description": "Total choices shown per question (correct + distractors)" },
+    "imageCandidates": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Image paths extracted from source PDFs, offered in the pin editor"
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "topic"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "enum": ["mc", "pin"] },
+          "topic": { "type": "string", "description": "Study area used in the weak-area report, e.g. 'Skull', 'Endocrine — Pituitary'" },
+          "prompt": { "type": "string", "description": "mc: required question text. pin: optional, defaults to 'What structure is marked?'" },
+          "options": { "type": "array", "items": { "type": "string" }, "description": "mc only: all choices including the correct one" },
+          "correctIndex": { "type": "integer", "description": "mc only: index into options" },
+          "image": { "type": "string", "description": "pin only: path relative to the quiz folder, e.g. images/skull_anterior.jpg" },
+          "pin": {
+            "type": "object",
+            "required": ["x", "y"],
+            "properties": { "x": { "type": "number", "minimum": 0, "maximum": 1 }, "y": { "type": "number", "minimum": 0, "maximum": 1 } },
+            "description": "pin only: normalized 0-1 coordinates on the image"
+          },
+          "answer": { "type": "string", "description": "pin only: correct label" },
+          "distractorPool": { "type": "array", "items": { "type": "string" }, "description": "pin only, optional: preferred distractors; engine falls back to same-image then same-topic answers" },
+          "explanation": { "type": "string", "description": "optional: shown after answering" }
+        }
+      }
+    }
+  }
+}
