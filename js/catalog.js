@@ -1,15 +1,30 @@
 // Homepage: lists every quiz from quizzes/index.json (built by tools/publish.sh).
+// In the desktop app, window.quizStudioNative (from the Electron preload)
+// replaces fetch with filesystem reads of bundled + imported quizzes.
+
+const native = typeof window !== 'undefined' ? window.quizStudioNative : null;
 
 export async function fetchQuizIndex() {
+  if (native) return native.listQuizzes();
   const res = await fetch('quizzes/index.json', { cache: 'no-store' });
   if (!res.ok) throw new Error(`Couldn't load the quiz list (${res.status}). Run tools/publish.sh to build quizzes/index.json.`);
   return res.json();
 }
 
 export async function fetchQuiz(id) {
+  if (native) {
+    const { quiz, base } = await native.readQuiz(id);
+    quiz.__base = base;
+    return quiz;
+  }
   const res = await fetch(`quizzes/${id}/quiz.json`, { cache: 'no-store' });
   if (!res.ok) throw new Error(`Couldn't load quiz "${id}" (${res.status}).`);
   return res.json();
+}
+
+// URL for a file that lives inside a quiz's folder (e.g. its images).
+export function quizAsset(quiz, relPath) {
+  return quiz.__base ? `${quiz.__base}/${relPath}` : `quizzes/${quiz.id}/${relPath}`;
 }
 
 export async function renderCatalog(view) {

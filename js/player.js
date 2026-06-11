@@ -1,5 +1,5 @@
 import * as E from './engine.js';
-import { fetchQuiz, esc } from './catalog.js';
+import { fetchQuiz, quizAsset, esc } from './catalog.js';
 import { setContext } from './app.js';
 
 export async function renderPlayer(view, quizArg) {
@@ -124,7 +124,7 @@ function correctText(q, options) {
 function pinFigure(quiz, q) {
   return `
     <div class="pin-figure" data-x="${q.pin.x}" data-y="${q.pin.y}">
-      <img src="quizzes/${quiz.id}/${q.image}" alt="identify the marked structure" draggable="false">
+      <img src="${quizAsset(quiz, q.image)}" alt="identify the marked structure" draggable="false">
       <div class="pin-marker" hidden><div class="pin-ring"></div><div class="pin-dot"></div></div>
     </div>`;
 }

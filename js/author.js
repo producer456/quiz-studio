@@ -1,6 +1,6 @@
 // Teacher mode (#/author): build or edit a quiz in the browser, export a
 // ready-to-publish zip (quiz folder with quiz.json + images).
-import { fetchQuizIndex, fetchQuiz, esc } from './catalog.js';
+import { fetchQuizIndex, fetchQuiz, quizAsset, esc } from './catalog.js';
 import { buildZip } from './zip.js';
 import { setContext } from './app.js';
 
@@ -221,7 +221,7 @@ function pinModal(view) {
   slot.querySelector('#p-candidate')?.addEventListener('change', e => {
     if (!e.target.value) return;
     imagePath = e.target.value;
-    img.src = `quizzes/${draft.id}/${imagePath}`;
+    img.src = quizAsset(draft, imagePath);
     figure.hidden = false;
   });
 

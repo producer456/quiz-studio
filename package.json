@@ -1,0 +1,48 @@
+{
+  "name": "quiz-studio",
+  "version": "1.0.0",
+  "description": "Anatomy study quizzes — multiple choice + image pin identification, with a retake-missed-until-perfect loop",
+  "main": "desktop/main.js",
+  "author": "David Sheffield",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
+  },
+  "dependencies": {
+    "extract-zip": "^2.0.1"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.legionstage.quizstudio",
+    "productName": "Quiz Studio",
+    "directories": { "output": "dist" },
+    "files": [
+      "index.html",
+      "css/**",
+      "js/**",
+      "desktop/**",
+      "package.json",
+      "node_modules/**"
+    ],
+    "extraResources": [
+      { "from": "quizzes", "to": "quizzes", "filter": ["**/*", "!index.json"] }
+    ],
+    "mac": {
+      "target": [{ "target": "dmg", "arch": ["universal"] }],
+      "category": "public.app-category.education",
+      "identity": null
+    },
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }]
+    },
+    "nsis": {
+      "oneClick": true,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
