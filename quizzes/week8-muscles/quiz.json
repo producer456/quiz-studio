@@ -1,0 +1,1180 @@
+{
+  "id": "week8-muscles",
+  "title": "BIO 40A — Week 8 Muscles",
+  "course": "BIO 40A",
+  "description": "Skeletal muscle tissue & axial muscles — 78 questions generated from the Week 8 terms list.",
+  "created": "2026-06-11",
+  "optionCount": 5,
+  "questions": [
+    {
+      "id": "q001",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which term matches this description: “Long, cylindrical organelle that runs parallel within the muscle fiber and contains the sarcomeres”?",
+      "options": [
+        "Myofibrils",
+        "Sarcoplasm",
+        "Sarcoplasmic reticulum",
+        "Sarcomere",
+        "Nucleus"
+      ],
+      "correctIndex": 0,
+      "explanation": "Myofibrils: long, cylindrical organelle that runs parallel within the muscle fiber and contains the sarcomeres."
+    },
+    {
+      "id": "q002",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which best describes the Myofibrils?",
+      "options": [
+        "Long, cylindrical organelle that runs parallel within the muscle fiber and contains the sarcomeres",
+        "Specialized smooth endoplasmic reticulum, which stores, releases, and retrieves Ca++",
+        "Plasma membrane of a skeletal muscle fiber",
+        "Cytoplasm of a muscle cell",
+        "Longitudinally, repeating functional unit of skeletal muscle, with all of the contractile and associated proteins involved in contraction"
+      ],
+      "correctIndex": 0,
+      "explanation": "Myofibrils: long, cylindrical organelle that runs parallel within the muscle fiber and contains the sarcomeres."
+    },
+    {
+      "id": "q003",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which term matches this description: “Longitudinally, repeating functional unit of skeletal muscle, with all of the contractile and associated proteins involved in contraction”?",
+      "options": [
+        "Sarcomere",
+        "Myofibrils",
+        "Nucleus",
+        "Sarcolemma",
+        "Sarcoplasmic reticulum"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sarcomere: longitudinally, repeating functional unit of skeletal muscle, with all of the contractile and associated proteins involved in contraction."
+    },
+    {
+      "id": "q004",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which best describes the Sarcomere?",
+      "options": [
+        "Longitudinally, repeating functional unit of skeletal muscle, with all of the contractile and associated proteins involved in contraction",
+        "Cell’s central organelle; contains the cell’s DNA",
+        "Long, cylindrical organelle that runs parallel within the muscle fiber and contains the sarcomeres",
+        "Plasma membrane of a skeletal muscle fiber",
+        "Specialized smooth endoplasmic reticulum, which stores, releases, and retrieves Ca++"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sarcomere: longitudinally, repeating functional unit of skeletal muscle, with all of the contractile and associated proteins involved in contraction."
+    },
+    {
+      "id": "q005",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which term matches this description: “Plasma membrane of a skeletal muscle fiber”?",
+      "options": [
+        "Sarcolemma",
+        "Sarcoplasmic reticulum",
+        "Sarcomere",
+        "Nucleus",
+        "Myofibrils"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sarcolemma: plasma membrane of a skeletal muscle fiber."
+    },
+    {
+      "id": "q006",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which best describes the Sarcolemma?",
+      "options": [
+        "Plasma membrane of a skeletal muscle fiber",
+        "Cytoplasm of a muscle cell",
+        "Specialized smooth endoplasmic reticulum, which stores, releases, and retrieves Ca++",
+        "Cell’s central organelle; contains the cell’s DNA",
+        "Longitudinally, repeating functional unit of skeletal muscle, with all of the contractile and associated proteins involved in contraction"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sarcolemma: plasma membrane of a skeletal muscle fiber."
+    },
+    {
+      "id": "q007",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which term matches this description: “Cytoplasm of a muscle cell”?",
+      "options": [
+        "Sarcoplasm",
+        "Sarcoplasmic reticulum",
+        "Nucleus",
+        "Myofibrils",
+        "Sarcolemma"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sarcoplasm: cytoplasm of a muscle cell."
+    },
+    {
+      "id": "q008",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which best describes the Sarcoplasm?",
+      "options": [
+        "Cytoplasm of a muscle cell",
+        "Long, cylindrical organelle that runs parallel within the muscle fiber and contains the sarcomeres",
+        "Specialized smooth endoplasmic reticulum, which stores, releases, and retrieves Ca++",
+        "Plasma membrane of a skeletal muscle fiber",
+        "Longitudinally, repeating functional unit of skeletal muscle, with all of the contractile and associated proteins involved in contraction"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sarcoplasm: cytoplasm of a muscle cell."
+    },
+    {
+      "id": "q009",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which term matches this description: “Specialized smooth endoplasmic reticulum, which stores, releases, and retrieves Ca++”?",
+      "options": [
+        "Sarcoplasmic reticulum",
+        "Sarcoplasm",
+        "Nucleus",
+        "Sarcolemma",
+        "Sarcomere"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sarcoplasmic reticulum: specialized smooth endoplasmic reticulum, which stores, releases, and retrieves Ca++."
+    },
+    {
+      "id": "q010",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which best describes the Sarcoplasmic reticulum?",
+      "options": [
+        "Specialized smooth endoplasmic reticulum, which stores, releases, and retrieves Ca++",
+        "Longitudinally, repeating functional unit of skeletal muscle, with all of the contractile and associated proteins involved in contraction",
+        "Plasma membrane of a skeletal muscle fiber",
+        "Cell’s central organelle; contains the cell’s DNA",
+        "Cytoplasm of a muscle cell"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sarcoplasmic reticulum: specialized smooth endoplasmic reticulum, which stores, releases, and retrieves Ca++."
+    },
+    {
+      "id": "q011",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which term matches this description: “Cell’s central organelle; contains the cell’s DNA”?",
+      "options": [
+        "Nucleus",
+        "Sarcolemma",
+        "Sarcoplasm",
+        "Myofibrils",
+        "Sarcoplasmic reticulum"
+      ],
+      "correctIndex": 0,
+      "explanation": "Nucleus: cell’s central organelle; contains the cell’s DNA."
+    },
+    {
+      "id": "q012",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which best describes the Nucleus?",
+      "options": [
+        "Cell’s central organelle; contains the cell’s DNA",
+        "Cytoplasm of a muscle cell",
+        "Plasma membrane of a skeletal muscle fiber",
+        "Specialized smooth endoplasmic reticulum, which stores, releases, and retrieves Ca++",
+        "Longitudinally, repeating functional unit of skeletal muscle, with all of the contractile and associated proteins involved in contraction"
+      ],
+      "correctIndex": 0,
+      "explanation": "Nucleus: cell’s central organelle; contains the cell’s DNA."
+    },
+    {
+      "id": "q013",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which term matches this description: “Posterior part of the occipitofrontalis muscle”?",
+      "options": [
+        "Occipitalis",
+        "Buccinator",
+        "Frontalis",
+        "Masseter",
+        "Orbicularis oculi"
+      ],
+      "correctIndex": 0,
+      "explanation": "Occipitalis: posterior part of the occipitofrontalis muscle."
+    },
+    {
+      "id": "q014",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which best describes the Occipitalis?",
+      "options": [
+        "Posterior part of the occipitofrontalis muscle",
+        "Front part of the occipitofrontalis muscle",
+        "Circular muscle that moves the lips",
+        "Circular muscle that closes the eye",
+        "Muscle that compresses the cheek"
+      ],
+      "correctIndex": 0,
+      "explanation": "Occipitalis: posterior part of the occipitofrontalis muscle."
+    },
+    {
+      "id": "q015",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which term matches this description: “Front part of the occipitofrontalis muscle”?",
+      "options": [
+        "Frontalis",
+        "Orbicularis oculi",
+        "Masseter",
+        "Orbicularis oris",
+        "Buccinator"
+      ],
+      "correctIndex": 0,
+      "explanation": "Frontalis: front part of the occipitofrontalis muscle."
+    },
+    {
+      "id": "q016",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which best describes the Frontalis?",
+      "options": [
+        "Front part of the occipitofrontalis muscle",
+        "Main muscle for chewing that elevates the mandible to close the mouth",
+        "Muscle that compresses the cheek",
+        "Posterior part of the occipitofrontalis muscle",
+        "Circular muscle that closes the eye"
+      ],
+      "correctIndex": 0,
+      "explanation": "Frontalis: front part of the occipitofrontalis muscle."
+    },
+    {
+      "id": "q017",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which term matches this description: “Circular muscle that closes the eye”?",
+      "options": [
+        "Orbicularis oculi",
+        "Frontalis",
+        "Orbicularis oris",
+        "Occipitalis",
+        "Masseter"
+      ],
+      "correctIndex": 0,
+      "explanation": "Orbicularis oculi: circular muscle that closes the eye."
+    },
+    {
+      "id": "q018",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which best describes the Orbicularis oculi?",
+      "options": [
+        "Circular muscle that closes the eye",
+        "Main muscle for chewing that elevates the mandible to close the mouth",
+        "Muscle that retracts the mandible",
+        "Posterior part of the occipitofrontalis muscle",
+        "Muscle that compresses the cheek"
+      ],
+      "correctIndex": 0,
+      "explanation": "Orbicularis oculi: circular muscle that closes the eye."
+    },
+    {
+      "id": "q019",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which term matches this description: “Main muscle for chewing that elevates the mandible to close the mouth”?",
+      "options": [
+        "Masseter",
+        "Orbicularis oris",
+        "Temporalis",
+        "Buccinator",
+        "Orbicularis oculi"
+      ],
+      "correctIndex": 0,
+      "explanation": "Masseter: main muscle for chewing that elevates the mandible to close the mouth."
+    },
+    {
+      "id": "q020",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which best describes the Masseter?",
+      "options": [
+        "Main muscle for chewing that elevates the mandible to close the mouth",
+        "Posterior part of the occipitofrontalis muscle",
+        "Front part of the occipitofrontalis muscle",
+        "Muscle that compresses the cheek",
+        "Circular muscle that moves the lips"
+      ],
+      "correctIndex": 0,
+      "explanation": "Masseter: main muscle for chewing that elevates the mandible to close the mouth."
+    },
+    {
+      "id": "q021",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which term matches this description: “Muscle that compresses the cheek”?",
+      "options": [
+        "Buccinator",
+        "Temporalis",
+        "Orbicularis oris",
+        "Frontalis",
+        "Occipitalis"
+      ],
+      "correctIndex": 0,
+      "explanation": "Buccinator: muscle that compresses the cheek."
+    },
+    {
+      "id": "q022",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which best describes the Buccinator?",
+      "options": [
+        "Muscle that compresses the cheek",
+        "Circular muscle that moves the lips",
+        "Circular muscle that closes the eye",
+        "Posterior part of the occipitofrontalis muscle",
+        "Main muscle for chewing that elevates the mandible to close the mouth"
+      ],
+      "correctIndex": 0,
+      "explanation": "Buccinator: muscle that compresses the cheek."
+    },
+    {
+      "id": "q023",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which term matches this description: “Circular muscle that moves the lips”?",
+      "options": [
+        "Orbicularis oris",
+        "Buccinator",
+        "Frontalis",
+        "Temporalis",
+        "Occipitalis"
+      ],
+      "correctIndex": 0,
+      "explanation": "Orbicularis oris: circular muscle that moves the lips."
+    },
+    {
+      "id": "q024",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which best describes the Orbicularis oris?",
+      "options": [
+        "Circular muscle that moves the lips",
+        "Muscle that compresses the cheek",
+        "Main muscle for chewing that elevates the mandible to close the mouth",
+        "Muscle that retracts the mandible",
+        "Front part of the occipitofrontalis muscle"
+      ],
+      "correctIndex": 0,
+      "explanation": "Orbicularis oris: circular muscle that moves the lips."
+    },
+    {
+      "id": "q025",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which term matches this description: “Muscle that retracts the mandible”?",
+      "options": [
+        "Temporalis",
+        "Occipitalis",
+        "Orbicularis oris",
+        "Buccinator",
+        "Masseter"
+      ],
+      "correctIndex": 0,
+      "explanation": "Temporalis: muscle that retracts the mandible."
+    },
+    {
+      "id": "q026",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which best describes the Temporalis?",
+      "options": [
+        "Muscle that retracts the mandible",
+        "Main muscle for chewing that elevates the mandible to close the mouth",
+        "Circular muscle that closes the eye",
+        "Circular muscle that moves the lips",
+        "Muscle that compresses the cheek"
+      ],
+      "correctIndex": 0,
+      "explanation": "Temporalis: muscle that retracts the mandible."
+    },
+    {
+      "id": "q027",
+      "type": "mc",
+      "topic": "Neck Muscles",
+      "prompt": "Which term matches this description: “Major muscle that laterally flexes and rotates the head”?",
+      "options": [
+        "Sternocleidomastoid",
+        "Trapezius",
+        "Diaphragm",
+        "External intercostals",
+        "Internal intercostals"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sternocleidomastoid: major muscle that laterally flexes and rotates the head."
+    },
+    {
+      "id": "q028",
+      "type": "mc",
+      "topic": "Neck Muscles",
+      "prompt": "Which best describes the Sternocleidomastoid?",
+      "options": [
+        "Major muscle that laterally flexes and rotates the head",
+        "Muscle that stabilizes the upper part of the back",
+        "Pennate muscle that has a tendon branching within it",
+        "Muscle located on the lateral surface of the tibia",
+        "Muscle that moves the mandible from side to side"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sternocleidomastoid: major muscle that laterally flexes and rotates the head."
+    },
+    {
+      "id": "q029",
+      "type": "mc",
+      "topic": "Neck Muscles",
+      "prompt": "Which term matches this description: “Muscle that stabilizes the upper part of the back”?",
+      "options": [
+        "Trapezius",
+        "Sternocleidomastoid",
+        "Superior Oblique",
+        "Temporalis",
+        "Diaphragm"
+      ],
+      "correctIndex": 0,
+      "explanation": "Trapezius: muscle that stabilizes the upper part of the back."
+    },
+    {
+      "id": "q030",
+      "type": "mc",
+      "topic": "Neck Muscles",
+      "prompt": "Which best describes the Trapezius?",
+      "options": [
+        "Muscle that stabilizes the upper part of the back",
+        "Major muscle that laterally flexes and rotates the head",
+        "(also, patellar tendon) tendon common to all four quadriceps muscles, inserts into the patella",
+        "Neck muscle that inserts into the cervical region",
+        "End of a skeletal muscle that is attached to another structure (usually a bone) in a fixed position"
+      ],
+      "correctIndex": 0,
+      "explanation": "Trapezius: muscle that stabilizes the upper part of the back."
+    },
+    {
+      "id": "q031",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which term matches this description: “Extraocular muscle responsible for lateral rotation of the eye”?",
+      "options": [
+        "Inferior Oblique",
+        "Inferior Rectus",
+        "Lateral Rectus",
+        "Superior Rectus",
+        "Medial Rectus"
+      ],
+      "correctIndex": 0,
+      "explanation": "Inferior Oblique: extraocular muscle responsible for lateral rotation of the eye."
+    },
+    {
+      "id": "q032",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which best describes the Inferior Oblique?",
+      "options": [
+        "Extraocular muscle responsible for lateral rotation of the eye",
+        "Extraocular muscle responsible for abduction of the eye",
+        "Extraocular muscle responsible for looking up",
+        "Extraocular muscle responsible for looking down",
+        "Extraocular muscle responsible for adduction of the eye"
+      ],
+      "correctIndex": 0,
+      "explanation": "Inferior Oblique: extraocular muscle responsible for lateral rotation of the eye."
+    },
+    {
+      "id": "q033",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which term matches this description: “Extraocular muscle responsible for medial rotation of the eye”?",
+      "options": [
+        "Superior Oblique",
+        "Inferior Oblique",
+        "Medial Rectus",
+        "Lateral Rectus",
+        "Superior Rectus"
+      ],
+      "correctIndex": 0,
+      "explanation": "Superior Oblique: extraocular muscle responsible for medial rotation of the eye."
+    },
+    {
+      "id": "q034",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which best describes the Superior Oblique?",
+      "options": [
+        "Extraocular muscle responsible for medial rotation of the eye",
+        "Extraocular muscle responsible for abduction of the eye",
+        "Extraocular muscle responsible for lateral rotation of the eye",
+        "Extraocular muscle responsible for adduction of the eye",
+        "Extraocular muscle responsible for looking up"
+      ],
+      "correctIndex": 0,
+      "explanation": "Superior Oblique: extraocular muscle responsible for medial rotation of the eye."
+    },
+    {
+      "id": "q035",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which term matches this description: “Extraocular muscle responsible for adduction of the eye”?",
+      "options": [
+        "Medial Rectus",
+        "Lateral Rectus",
+        "Superior Oblique",
+        "Inferior Oblique",
+        "Inferior Rectus"
+      ],
+      "correctIndex": 0,
+      "explanation": "Medial Rectus: extraocular muscle responsible for adduction of the eye."
+    },
+    {
+      "id": "q036",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which best describes the Medial Rectus?",
+      "options": [
+        "Extraocular muscle responsible for adduction of the eye",
+        "Extraocular muscle responsible for lateral rotation of the eye",
+        "Extraocular muscle responsible for medial rotation of the eye",
+        "Extraocular muscle responsible for abduction of the eye",
+        "Extraocular muscle responsible for looking up"
+      ],
+      "correctIndex": 0,
+      "explanation": "Medial Rectus: extraocular muscle responsible for adduction of the eye."
+    },
+    {
+      "id": "q037",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which term matches this description: “Extraocular muscle responsible for abduction of the eye”?",
+      "options": [
+        "Lateral Rectus",
+        "Medial Rectus",
+        "Superior Rectus",
+        "Inferior Rectus",
+        "Inferior Oblique"
+      ],
+      "correctIndex": 0,
+      "explanation": "Lateral Rectus: extraocular muscle responsible for abduction of the eye."
+    },
+    {
+      "id": "q038",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which best describes the Lateral Rectus?",
+      "options": [
+        "Extraocular muscle responsible for abduction of the eye",
+        "Extraocular muscle responsible for adduction of the eye",
+        "Extraocular muscle responsible for looking down",
+        "Extraocular muscle responsible for lateral rotation of the eye",
+        "Extraocular muscle responsible for looking up"
+      ],
+      "correctIndex": 0,
+      "explanation": "Lateral Rectus: extraocular muscle responsible for abduction of the eye."
+    },
+    {
+      "id": "q039",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which term matches this description: “Extraocular muscle responsible for looking up”?",
+      "options": [
+        "Superior Rectus",
+        "Inferior Rectus",
+        "Lateral Rectus",
+        "Inferior Oblique",
+        "Superior Oblique"
+      ],
+      "correctIndex": 0,
+      "explanation": "Superior Rectus: extraocular muscle responsible for looking up."
+    },
+    {
+      "id": "q040",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which best describes the Superior Rectus?",
+      "options": [
+        "Extraocular muscle responsible for looking up",
+        "Extraocular muscle responsible for lateral rotation of the eye",
+        "Extraocular muscle responsible for looking down",
+        "Extraocular muscle responsible for adduction of the eye",
+        "Extraocular muscle responsible for medial rotation of the eye"
+      ],
+      "correctIndex": 0,
+      "explanation": "Superior Rectus: extraocular muscle responsible for looking up."
+    },
+    {
+      "id": "q041",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which term matches this description: “Extraocular muscle responsible for looking down”?",
+      "options": [
+        "Inferior Rectus",
+        "Medial Rectus",
+        "Inferior Oblique",
+        "Superior Rectus",
+        "Superior Oblique"
+      ],
+      "correctIndex": 0,
+      "explanation": "Inferior Rectus: extraocular muscle responsible for looking down."
+    },
+    {
+      "id": "q042",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which best describes the Inferior Rectus?",
+      "options": [
+        "Extraocular muscle responsible for looking down",
+        "Extraocular muscle responsible for abduction of the eye",
+        "Extraocular muscle responsible for looking up",
+        "Extraocular muscle responsible for adduction of the eye",
+        "Extraocular muscle responsible for medial rotation of the eye"
+      ],
+      "correctIndex": 0,
+      "explanation": "Inferior Rectus: extraocular muscle responsible for looking down."
+    },
+    {
+      "id": "q043",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Thick, fan-shaped axial muscle that covers much of the superior thorax”?",
+      "options": [
+        "Pectoralis Major",
+        "External oblique",
+        "Internal intercostals",
+        "Pectoralis Minor",
+        "External intercostals"
+      ],
+      "correctIndex": 0,
+      "explanation": "Pectoralis Major: thick, fan-shaped axial muscle that covers much of the superior thorax."
+    },
+    {
+      "id": "q044",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Pectoralis Major?",
+      "options": [
+        "Thick, fan-shaped axial muscle that covers much of the superior thorax",
+        "Superficial abdominal muscle with fascicles that extend inferiorly and medially",
+        "Muscle that moves the scapula and assists in inhalation",
+        "Long, linear muscle that extends along the middle of the trunk",
+        "Large and flat muscle that originates on the ribs and inserts onto the scapula"
+      ],
+      "correctIndex": 0,
+      "explanation": "Pectoralis Major: thick, fan-shaped axial muscle that covers much of the superior thorax."
+    },
+    {
+      "id": "q045",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Muscle that moves the scapula and assists in inhalation”?",
+      "options": [
+        "Pectoralis Minor",
+        "Innermost intercostals",
+        "Rectus abdominis",
+        "External oblique",
+        "Serratus anterior"
+      ],
+      "correctIndex": 0,
+      "explanation": "Pectoralis Minor: muscle that moves the scapula and assists in inhalation."
+    },
+    {
+      "id": "q046",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Pectoralis Minor?",
+      "options": [
+        "Muscle that moves the scapula and assists in inhalation",
+        "Thick, fan-shaped axial muscle that covers much of the superior thorax",
+        "Broad, triangular axial muscle located on the inferior part of the back",
+        "The deepest intercostal muscles that draw the ribs together",
+        "Superficial intercostal muscles that raise the rib cage"
+      ],
+      "correctIndex": 0,
+      "explanation": "Pectoralis Minor: muscle that moves the scapula and assists in inhalation."
+    },
+    {
+      "id": "q047",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest”?",
+      "options": [
+        "Diaphragm",
+        "External intercostals",
+        "External oblique",
+        "Pectoralis Minor",
+        "Serratus anterior"
+      ],
+      "correctIndex": 0,
+      "explanation": "Diaphragm: skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest."
+    },
+    {
+      "id": "q048",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Diaphragm?",
+      "options": [
+        "Skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest",
+        "Broad, triangular axial muscle located on the inferior part of the back",
+        "Muscle that moves the scapula and assists in inhalation",
+        "Thick, fan-shaped axial muscle that covers much of the superior thorax",
+        "Muscles the intermediate intercostal muscles that draw the ribs together"
+      ],
+      "correctIndex": 0,
+      "explanation": "Diaphragm: skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest."
+    },
+    {
+      "id": "q049",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Superficial intercostal muscles that raise the rib cage”?",
+      "options": [
+        "External intercostals",
+        "Pectoralis Minor",
+        "Internal intercostals",
+        "Transverse abdominis",
+        "External oblique"
+      ],
+      "correctIndex": 0,
+      "explanation": "External intercostals: superficial intercostal muscles that raise the rib cage."
+    },
+    {
+      "id": "q050",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the External intercostals?",
+      "options": [
+        "Superficial intercostal muscles that raise the rib cage",
+        "Flat, intermediate abdominal muscle with fascicles that run perpendicular to those of the external oblique",
+        "Broad, triangular axial muscle located on the inferior part of the back",
+        "Deep layer of the abdomen that has fascicles arranged transversely around the abdomen",
+        "Thick, fan-shaped axial muscle that covers much of the superior thorax"
+      ],
+      "correctIndex": 0,
+      "explanation": "External intercostals: superficial intercostal muscles that raise the rib cage."
+    },
+    {
+      "id": "q051",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Muscles the intermediate intercostal muscles that draw the ribs together”?",
+      "options": [
+        "Internal intercostals",
+        "Diaphragm",
+        "Pectoralis Minor",
+        "Serratus anterior",
+        "External oblique"
+      ],
+      "correctIndex": 0,
+      "explanation": "Internal intercostals: muscles the intermediate intercostal muscles that draw the ribs together."
+    },
+    {
+      "id": "q052",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Internal intercostals?",
+      "options": [
+        "Muscles the intermediate intercostal muscles that draw the ribs together",
+        "The deepest intercostal muscles that draw the ribs together",
+        "Superficial abdominal muscle with fascicles that extend inferiorly and medially",
+        "Muscle that moves the scapula and assists in inhalation",
+        "Skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest"
+      ],
+      "correctIndex": 0,
+      "explanation": "Internal intercostals: muscles the intermediate intercostal muscles that draw the ribs together."
+    },
+    {
+      "id": "q053",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “The deepest intercostal muscles that draw the ribs together”?",
+      "options": [
+        "Innermost intercostals",
+        "External intercostals",
+        "Internal oblique",
+        "Pectoralis Major",
+        "Diaphragm"
+      ],
+      "correctIndex": 0,
+      "explanation": "Innermost intercostals: the deepest intercostal muscles that draw the ribs together."
+    },
+    {
+      "id": "q054",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Innermost intercostals?",
+      "options": [
+        "The deepest intercostal muscles that draw the ribs together",
+        "Muscle that moves the scapula and assists in inhalation",
+        "Large and flat muscle that originates on the ribs and inserts onto the scapula",
+        "Superficial intercostal muscles that raise the rib cage",
+        "Broad, triangular axial muscle located on the inferior part of the back"
+      ],
+      "correctIndex": 0,
+      "explanation": "Innermost intercostals: the deepest intercostal muscles that draw the ribs together."
+    },
+    {
+      "id": "q055",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Large and flat muscle that originates on the ribs and inserts onto the scapula”?",
+      "options": [
+        "Serratus anterior",
+        "Latissimus dorsi",
+        "External oblique",
+        "External intercostals",
+        "Internal intercostals"
+      ],
+      "correctIndex": 0,
+      "explanation": "Serratus anterior: large and flat muscle that originates on the ribs and inserts onto the scapula."
+    },
+    {
+      "id": "q056",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Serratus anterior?",
+      "options": [
+        "Large and flat muscle that originates on the ribs and inserts onto the scapula",
+        "Skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest",
+        "Superficial abdominal muscle with fascicles that extend inferiorly and medially",
+        "Deep layer of the abdomen that has fascicles arranged transversely around the abdomen",
+        "Muscles the intermediate intercostal muscles that draw the ribs together"
+      ],
+      "correctIndex": 0,
+      "explanation": "Serratus anterior: large and flat muscle that originates on the ribs and inserts onto the scapula."
+    },
+    {
+      "id": "q057",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Superficial abdominal muscle with fascicles that extend inferiorly and medially”?",
+      "options": [
+        "External oblique",
+        "Pectoralis Major",
+        "External intercostals",
+        "Transverse abdominis",
+        "Internal oblique"
+      ],
+      "correctIndex": 0,
+      "explanation": "External oblique: superficial abdominal muscle with fascicles that extend inferiorly and medially."
+    },
+    {
+      "id": "q058",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the External oblique?",
+      "options": [
+        "Superficial abdominal muscle with fascicles that extend inferiorly and medially",
+        "Flat, intermediate abdominal muscle with fascicles that run perpendicular to those of the external oblique",
+        "Skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest",
+        "Deep layer of the abdomen that has fascicles arranged transversely around the abdomen",
+        "Long, linear muscle that extends along the middle of the trunk"
+      ],
+      "correctIndex": 0,
+      "explanation": "External oblique: superficial abdominal muscle with fascicles that extend inferiorly and medially."
+    },
+    {
+      "id": "q059",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Flat, intermediate abdominal muscle with fascicles that run perpendicular to those of the external oblique”?",
+      "options": [
+        "Internal oblique",
+        "Rectus abdominis",
+        "Transverse abdominis",
+        "Latissimus dorsi",
+        "External intercostals"
+      ],
+      "correctIndex": 0,
+      "explanation": "Internal oblique: flat, intermediate abdominal muscle with fascicles that run perpendicular to those of the external oblique."
+    },
+    {
+      "id": "q060",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Internal oblique?",
+      "options": [
+        "Flat, intermediate abdominal muscle with fascicles that run perpendicular to those of the external oblique",
+        "Skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest",
+        "Superficial intercostal muscles that raise the rib cage",
+        "Muscles the intermediate intercostal muscles that draw the ribs together",
+        "Long, linear muscle that extends along the middle of the trunk"
+      ],
+      "correctIndex": 0,
+      "explanation": "Internal oblique: flat, intermediate abdominal muscle with fascicles that run perpendicular to those of the external oblique."
+    },
+    {
+      "id": "q061",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Deep layer of the abdomen that has fascicles arranged transversely around the abdomen”?",
+      "options": [
+        "Transverse abdominis",
+        "Rectus abdominis",
+        "Latissimus dorsi",
+        "Internal oblique",
+        "Innermost intercostals"
+      ],
+      "correctIndex": 0,
+      "explanation": "Transverse abdominis: deep layer of the abdomen that has fascicles arranged transversely around the abdomen."
+    },
+    {
+      "id": "q062",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Transverse abdominis?",
+      "options": [
+        "Deep layer of the abdomen that has fascicles arranged transversely around the abdomen",
+        "The deepest intercostal muscles that draw the ribs together",
+        "Flat, intermediate abdominal muscle with fascicles that run perpendicular to those of the external oblique",
+        "Skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest",
+        "Large and flat muscle that originates on the ribs and inserts onto the scapula"
+      ],
+      "correctIndex": 0,
+      "explanation": "Transverse abdominis: deep layer of the abdomen that has fascicles arranged transversely around the abdomen."
+    },
+    {
+      "id": "q063",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Long, linear muscle that extends along the middle of the trunk”?",
+      "options": [
+        "Rectus abdominis",
+        "Internal intercostals",
+        "Diaphragm",
+        "External oblique",
+        "Pectoralis Major"
+      ],
+      "correctIndex": 0,
+      "explanation": "Rectus abdominis: long, linear muscle that extends along the middle of the trunk."
+    },
+    {
+      "id": "q064",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Rectus abdominis?",
+      "options": [
+        "Long, linear muscle that extends along the middle of the trunk",
+        "Superficial abdominal muscle with fascicles that extend inferiorly and medially",
+        "Superficial intercostal muscles that raise the rib cage",
+        "Skeletal muscle that separates the thoracic and abdominal cavities and is dome-shaped at rest",
+        "Large and flat muscle that originates on the ribs and inserts onto the scapula"
+      ],
+      "correctIndex": 0,
+      "explanation": "Rectus abdominis: long, linear muscle that extends along the middle of the trunk."
+    },
+    {
+      "id": "q065",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which term matches this description: “Broad, triangular axial muscle located on the inferior part of the back”?",
+      "options": [
+        "Latissimus dorsi",
+        "Innermost intercostals",
+        "Diaphragm",
+        "External oblique",
+        "Rectus abdominis"
+      ],
+      "correctIndex": 0,
+      "explanation": "Latissimus dorsi: broad, triangular axial muscle located on the inferior part of the back."
+    },
+    {
+      "id": "q066",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which best describes the Latissimus dorsi?",
+      "options": [
+        "Broad, triangular axial muscle located on the inferior part of the back",
+        "Long, linear muscle that extends along the middle of the trunk",
+        "Muscles the intermediate intercostal muscles that draw the ribs together",
+        "Large and flat muscle that originates on the ribs and inserts onto the scapula",
+        "Superficial intercostal muscles that raise the rib cage"
+      ],
+      "correctIndex": 0,
+      "explanation": "Latissimus dorsi: broad, triangular axial muscle located on the inferior part of the back."
+    },
+    {
+      "id": "q067",
+      "type": "mc",
+      "topic": "Non-muscular structures",
+      "prompt": "Which term matches this description: “Three transverse bands of collagen fibers that divide the rectus abdominis into segments”?",
+      "options": [
+        "Tendinous Intersections",
+        "Linea alba",
+        "Occipitalis",
+        "Sternocleidomastoid",
+        "Myofibrils"
+      ],
+      "correctIndex": 0,
+      "explanation": "Tendinous Intersections: three transverse bands of collagen fibers that divide the rectus abdominis into segments."
+    },
+    {
+      "id": "q068",
+      "type": "mc",
+      "topic": "Non-muscular structures",
+      "prompt": "Which best describes the Tendinous Intersections?",
+      "options": [
+        "Three transverse bands of collagen fibers that divide the rectus abdominis into segments",
+        "White, fibrous band that runs along the midline of the trunk",
+        "Quadricep muscle on the anterior aspect of the thigh",
+        "Muscle deep to the biceps brachii that provides power in flexing the forearm.",
+        "Muscle deep to the gluteus maximus on the lateral surface of the thigh that laterally rotates the femur at the hip"
+      ],
+      "correctIndex": 0,
+      "explanation": "Tendinous Intersections: three transverse bands of collagen fibers that divide the rectus abdominis into segments."
+    },
+    {
+      "id": "q069",
+      "type": "mc",
+      "topic": "Non-muscular structures",
+      "prompt": "Which term matches this description: “White, fibrous band that runs along the midline of the trunk”?",
+      "options": [
+        "Linea alba",
+        "Tendinous Intersections",
+        "Transverse abdominis",
+        "Myofibrils",
+        "Innermost intercostals"
+      ],
+      "correctIndex": 0,
+      "explanation": "Linea alba: white, fibrous band that runs along the midline of the trunk."
+    },
+    {
+      "id": "q070",
+      "type": "mc",
+      "topic": "Non-muscular structures",
+      "prompt": "Which best describes the Linea alba?",
+      "options": [
+        "White, fibrous band that runs along the midline of the trunk",
+        "Three transverse bands of collagen fibers that divide the rectus abdominis into segments",
+        "Pennate muscle that has a tendon branching within it",
+        "Bulky central body of a muscle",
+        "Muscle of the lumbar region that helps extend and laterally flex the vertebral column"
+      ],
+      "correctIndex": 0,
+      "explanation": "Linea alba: white, fibrous band that runs along the midline of the trunk."
+    },
+    {
+      "id": "q071",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which of these is NOT one of the muscle tissue?",
+      "options": [
+        "Serratus anterior",
+        "Nucleus",
+        "Myofibrils",
+        "Sarcomere",
+        "Sarcolemma"
+      ],
+      "correctIndex": 0,
+      "explanation": "Serratus anterior belongs to “Trunk Muscles”, not “Muscle Tissue”."
+    },
+    {
+      "id": "q072",
+      "type": "mc",
+      "topic": "Muscle Tissue",
+      "prompt": "Which of these is NOT one of the muscle tissue?",
+      "options": [
+        "Linea alba",
+        "Sarcolemma",
+        "Sarcoplasm",
+        "Nucleus",
+        "Myofibrils"
+      ],
+      "correctIndex": 0,
+      "explanation": "Linea alba belongs to “Non-muscular structures”, not “Muscle Tissue”."
+    },
+    {
+      "id": "q073",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which of these is NOT one of the facial muscles?",
+      "options": [
+        "Medial Rectus",
+        "Buccinator",
+        "Temporalis",
+        "Frontalis",
+        "Orbicularis oculi"
+      ],
+      "correctIndex": 0,
+      "explanation": "Medial Rectus belongs to “Extrinsic Eye Muscles”, not “Facial Muscles”."
+    },
+    {
+      "id": "q074",
+      "type": "mc",
+      "topic": "Facial Muscles",
+      "prompt": "Which of these is NOT one of the facial muscles?",
+      "options": [
+        "Internal oblique",
+        "Orbicularis oculi",
+        "Occipitalis",
+        "Orbicularis oris",
+        "Frontalis"
+      ],
+      "correctIndex": 0,
+      "explanation": "Internal oblique belongs to “Trunk Muscles”, not “Facial Muscles”."
+    },
+    {
+      "id": "q075",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which of these is NOT one of the extrinsic eye muscles?",
+      "options": [
+        "Internal intercostals",
+        "Medial Rectus",
+        "Lateral Rectus",
+        "Inferior Oblique",
+        "Superior Oblique"
+      ],
+      "correctIndex": 0,
+      "explanation": "Internal intercostals belongs to “Trunk Muscles”, not “Extrinsic Eye Muscles”."
+    },
+    {
+      "id": "q076",
+      "type": "mc",
+      "topic": "Extrinsic Eye Muscles",
+      "prompt": "Which of these is NOT one of the extrinsic eye muscles?",
+      "options": [
+        "External oblique",
+        "Superior Oblique",
+        "Medial Rectus",
+        "Lateral Rectus",
+        "Inferior Oblique"
+      ],
+      "correctIndex": 0,
+      "explanation": "External oblique belongs to “Trunk Muscles”, not “Extrinsic Eye Muscles”."
+    },
+    {
+      "id": "q077",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which of these is NOT one of the trunk muscles?",
+      "options": [
+        "Sarcoplasm",
+        "Innermost intercostals",
+        "Rectus abdominis",
+        "Serratus anterior",
+        "Transverse abdominis"
+      ],
+      "correctIndex": 0,
+      "explanation": "Sarcoplasm belongs to “Muscle Tissue”, not “Trunk Muscles”."
+    },
+    {
+      "id": "q078",
+      "type": "mc",
+      "topic": "Trunk Muscles",
+      "prompt": "Which of these is NOT one of the trunk muscles?",
+      "options": [
+        "Nucleus",
+        "Transverse abdominis",
+        "External oblique",
+        "Internal oblique",
+        "Latissimus dorsi"
+      ],
+      "correctIndex": 0,
+      "explanation": "Nucleus belongs to “Muscle Tissue”, not “Trunk Muscles”."
+    }
+  ]
+}
