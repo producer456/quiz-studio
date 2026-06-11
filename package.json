@@ -1,6 +1,6 @@
 {
   "name": "quiz-studio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Anatomy study quizzes — multiple choice + image pin identification, with a retake-missed-until-perfect loop",
   "main": "desktop/main.js",
   "author": "David Sheffield",
@@ -11,7 +11,8 @@
     "dist:win": "electron-builder --win"
   },
   "dependencies": {
-    "extract-zip": "^2.0.1"
+    "extract-zip": "^2.0.1",
+    "pdfjs-dist": "^6.0.227"
   },
   "devDependencies": {
     "electron": "^33.0.0",
@@ -20,7 +21,9 @@
   "build": {
     "appId": "com.legionstage.quizstudio",
     "productName": "Quiz Studio",
-    "directories": { "output": "dist" },
+    "directories": {
+      "output": "dist"
+    },
     "files": [
       "index.html",
       "css/**",
@@ -30,15 +33,36 @@
       "node_modules/**"
     ],
     "extraResources": [
-      { "from": "quizzes", "to": "quizzes", "filter": ["**/*", "!index.json"] }
+      {
+        "from": "quizzes",
+        "to": "quizzes",
+        "filter": [
+          "**/*",
+          "!index.json"
+        ]
+      }
     ],
     "mac": {
-      "target": [{ "target": "dmg", "arch": ["universal"] }],
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
       "category": "public.app-category.education",
       "identity": null
     },
     "win": {
-      "target": [{ "target": "nsis", "arch": ["x64"] }]
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
     },
     "nsis": {
       "oneClick": true,

@@ -1,6 +1,7 @@
 # Quiz Studio
 
 One site, all the study quizzes: https://producer456.github.io/quiz-studio/
+Desktop apps (Mac/PC, fully offline): see [Releases](https://github.com/producer456/quiz-studio/releases).
 
 Every quiz lives in `quizzes/<id>/` as a `quiz.json` (+ `images/`). The player
 engine is generic — drop in a new folder, publish, done. Both question types
@@ -10,41 +11,50 @@ right**.
 
 ## Question types
 
-- **`mc`** — classic multiple choice (the 150-question lecture/textbook banks)
+- **`mc`** — classic multiple choice
 - **`pin`** — an image with a pre-placed pin; identify the marked structure
   from 5 choices. Distractors are assembled automatically from the other pins
   on the same image, then same-topic, then the rest of the quiz.
 
 Schema: `tools/schema.json`.
 
-## Making a quiz from PDFs
+## Generating a quiz (desktop app)
+
+**⚡ Generate** in the app's teacher mode: drop in lecture PDFs, terms lists,
+or images. Everything runs locally — no cloud AI:
+
+- **Built-in engine** — instant and offline. Parses the terms-list structure
+  (section headings → topics, bullets → terms), matches terms against the
+  bundled **OpenStax Anatomy & Physiology 2e glossary** (3,000+ terms,
+  CC BY 4.0, openstax.org), and writes definition / identification / category
+  questions with same-category distractors.
+- **Marcus engine** — optional AI question writing on David's local server
+  (tailnet only), model selectable live from the server's list. Also available
+  as a fallback to write definitions for terms the glossary doesn't know.
+- PDF pages can be kept as figure images; tap pins on them in teacher mode
+  (your taps are the answer key — no AI guessing at anatomy).
+
+Generated quizzes land in your app library immediately and open in teacher
+mode for review — that's the editing layer for anything the generator got
+wrong (click any question to fix it, tap to move pins).
+
+## Sharing & publishing
+
+- **To classmates' apps:** export a quiz zip (teacher mode → Download) or
+  `tools/pack-quiz.sh <id>`, send it however; they use File → Import Quiz….
+- **To the website:** unzip into `quizzes/` here, then
+  `tools/publish.sh "add week 8"` (validates everything, rebuilds the index,
+  pushes; live in ~1 min).
+- Preview locally: `python3 -m http.server -d . 8000`
+
+## Building the desktop apps
 
 ```bash
-tools/make-quiz.sh week6-endocrine "Week 6 — Endocrine" lecture6.pdf chapter17.pdf
-# options: -n 100 (question count, default 150) · -c "BIO 41" (course)
+npm install
+npx electron-builder --mac --win   # → dist/
 ```
-
-This extracts the PDFs' images as pin candidates, has Claude write the MC
-question bank (rules in `tools/question-rules.md`), validates it, and drops
-`quizzes/week6-endocrine/quiz.json`.
-
-## Pin questions / teacher mode
-
-Open the site's `#/author` page (✎ in the footer — works in Safari on the
-iPad). Pick a PDF-extracted image or upload one, tap each structure, name it.
-Export downloads a zip of the quiz folder; unzip into `quizzes/` here.
-
-## Preview + publish
-
-```bash
-python3 -m http.server -d . 8000     # http://localhost:8000
-tools/publish.sh "add week 6"        # validates everything, rebuilds the index, pushes
-```
-
-GitHub Pages serves `main` directly; live ~1 minute after push.
 
 ## Heads-up on images
 
-The site is public. Lab-packet scans are the usual gray area; for anything
-beyond that, prefer CC-licensed figures (Wikimedia, OpenStax) over
-personal-use-only sources.
+The site is public. Lab-packet scans are the usual gray area; prefer
+CC-licensed figures (Wikimedia, OpenStax) where possible.

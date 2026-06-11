@@ -7,6 +7,7 @@ const fs = require('fs');
 const fsp = fs.promises;
 const { pathToFileURL } = require('url');
 const extractZip = require('extract-zip');
+const marcus = require('./marcus.js');
 
 const SITE_URL = 'https://producer456.github.io/quiz-studio/';
 
@@ -58,6 +59,43 @@ ipcMain.handle('quizzes:read', async (_e, id) => {
   if (!hit) throw new Error(`No quiz "${id}"`);
   return { quiz: hit.quiz, base: pathToFileURL(hit.dir).href };
 });
+
+// Save a quiz (from the Generate flow or teacher-mode edits) into the user's
+// quiz folder. images: [{name, base64}] land in <id>/images/. When the quiz
+// previously lived elsewhere (bundled copy being edited), its images are
+// carried over so file references keep resolving.
+ipcMain.handle('quizzes:saveDraft', async (_e, { quiz, images }) => {
+  if (!quiz?.id || !/^[a-z0-9][a-z0-9-]*$/.test(quiz.id)) throw new Error('quiz needs a valid id');
+  const dir = path.join(importedQuizzesDir(), quiz.id);
+  const prior = (await readQuizDirs()).get(quiz.id);
+  await fsp.mkdir(path.join(dir, 'images'), { recursive: true });
+  if (prior && prior.dir !== dir && fs.existsSync(path.join(prior.dir, 'images'))) {
+    await fsp.cp(path.join(prior.dir, 'images'), path.join(dir, 'images'), { recursive: true, force: false }).catch(() => {});
+  }
+  await fsp.writeFile(path.join(dir, 'quiz.json'), JSON.stringify(quiz, null, 2) + '\n');
+  for (const img of images || []) {
+    const safe = path.basename(img.name);
+    await fsp.writeFile(path.join(dir, 'images', safe), Buffer.from(img.base64, 'base64'));
+  }
+  return { saved: true, dir };
+});
+
+ipcMain.handle('quizzes:delete', async (_e, id) => {
+  const dir = path.join(importedQuizzesDir(), path.basename(id));
+  await fsp.rm(dir, { recursive: true, force: true });
+  return { deleted: true };
+});
+
+ipcMain.handle('glossary:get', async () => {
+  return JSON.parse(await fsp.readFile(path.join(__dirname, 'glossary.json'), 'utf8'));
+});
+
+// --- Marcus (optional AI assist) -------------------------------------------
+const genEmit = e => msg => e.sender.send('gen:progress', msg);
+ipcMain.handle('marcus:models', () => marcus.listModels());
+ipcMain.handle('marcus:select', (e, id) => marcus.selectModel(id, genEmit(e)));
+ipcMain.handle('marcus:fillDefs', (e, terms) => marcus.fillDefinitions(terms, genEmit(e)));
+ipcMain.handle('marcus:writeQuestions', (e, terms) => marcus.writeQuestions(terms, genEmit(e)));
 
 async function importQuizZips(win) {
   const { canceled, filePaths } = await dialog.showOpenDialog(win, {
@@ -140,19 +178,36 @@ function createWindow() {
     return { action: 'deny' };
   });
 
-  // automated UI verification: --screenshot=/path.png [--route="#/..."] captures and quits
-  const shotArg = process.argv.find(a => a.startsWith('--screenshot='));
-  if (shotArg) {
-    const routeArg = process.argv.find(a => a.startsWith('--route='));
+  // automated UI verification:
+  //   --screenshot=/path.png [--route="#/..."]  capture a view and quit
+  //   --exec=/path.js                           run a script in the page, wait
+  //                                             for window.__testDone, then
+  //                                             screenshot (if asked) and quit
+  const argval = name => {
+    const a = process.argv.find(x => x.startsWith(`--${name}=`));
+    return a ? a.slice(name.length + 3) : null;
+  };
+  const shotPath = argval('screenshot');
+  const execPath = argval('exec');
+  if (shotPath || execPath) {
     win.webContents.once('did-finish-load', async () => {
-      if (routeArg) {
-        await win.webContents.executeJavaScript(`location.hash = ${JSON.stringify(routeArg.split('=')[1])}`);
+      const route = argval('route');
+      if (route) await win.webContents.executeJavaScript(`location.hash = ${JSON.stringify(route)}`);
+      await new Promise(r => setTimeout(r, 1200));
+      if (execPath) {
+        await win.webContents.executeJavaScript(fs.readFileSync(execPath, 'utf8')).catch(e => console.error('exec error:', e.message));
+        const deadline = Date.now() + 12 * 60 * 1000;
+        while (Date.now() < deadline) {
+          const done = await win.webContents.executeJavaScript('window.__testDone || null').catch(() => null);
+          if (done) { console.log('E2E:', typeof done === 'string' ? done : JSON.stringify(done)); break; }
+          await new Promise(r => setTimeout(r, 1000));
+        }
       }
-      setTimeout(async () => {
+      if (shotPath) {
         const img = await win.webContents.capturePage();
-        fs.writeFileSync(shotArg.split('=')[1], img.toPNG());
-        app.quit();
-      }, 1200);
+        fs.writeFileSync(shotPath, img.toPNG());
+      }
+      app.quit();
     });
   }
   return win;
