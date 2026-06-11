@@ -34,5 +34,8 @@ for quiz_file in sorted(quizzes_dir.glob("*/quiz.json")):
 entries.sort(key=lambda e: e.get("created", ""), reverse=True)
 out = quizzes_dir / "index.json"
 out.write_text(json.dumps({"quizzes": entries}, indent=2) + "\n")
-print(f"wrote {out} with {len(entries)} quiz(es)" + (f", {bad} skipped" if bad else ""))
-sys.exit(1 if bad else 0)
+print(f"wrote {out} with {len(entries)} quiz(es)" + (f", {bad} skipped (see warnings above)" if bad else ""))
+# don't fail the build: publish.sh's validate gate already catches id/folder
+# mismatches before we get here, and exiting non-zero under `set -e` would
+# abort after index.json was rewritten but before the commit
+sys.exit(0)

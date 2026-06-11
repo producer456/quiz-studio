@@ -24,6 +24,12 @@ def validate(path, quiz_dir=None):
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", quiz["id"]):
         problems.append(f"id '{quiz['id']}' must be lowercase letters/digits/hyphens")
 
+    # id must match the folder name, or build_index.py silently drops the quiz
+    if quiz_dir is not None:
+        folder = Path(quiz_dir).name
+        if quiz["id"] != folder:
+            problems.append(f"id '{quiz['id']}' does not match folder name '{folder}' (rename one to match)")
+
     opt_count = quiz.get("optionCount", 5)
     if not isinstance(opt_count, int) or not 2 <= opt_count <= 8:
         problems.append(f"optionCount {opt_count} out of range 2-8")

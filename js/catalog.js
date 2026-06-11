@@ -2,6 +2,8 @@
 // In the desktop app, window.quizStudioNative (from the Electron preload)
 // replaces fetch with filesystem reads of bundled + imported quizzes.
 
+import { isStale } from './app.js';
+
 const native = typeof window !== 'undefined' ? window.quizStudioNative : null;
 
 export async function fetchQuizIndex() {
@@ -27,8 +29,9 @@ export function quizAsset(quiz, relPath) {
   return quiz.__base ? `${quiz.__base}/${relPath}` : `quizzes/${quiz.id}/${relPath}`;
 }
 
-export async function renderCatalog(view) {
+export async function renderCatalog(view, token) {
   const index = await fetchQuizIndex();
+  if (token !== undefined && isStale(token)) return;
   const byCourse = {};
   for (const q of index.quizzes) (byCourse[q.course || 'Other'] ||= []).push(q);
 

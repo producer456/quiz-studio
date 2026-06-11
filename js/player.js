@@ -1,22 +1,33 @@
 import * as E from './engine.js';
 import { fetchQuiz, quizAsset, esc } from './catalog.js';
-import { setContext } from './app.js';
+import { setContext, isStale } from './app.js';
 
-export async function renderPlayer(view, quizArg) {
+export async function renderPlayer(view, quizArg, token) {
   // #/quiz/<id>?mode=test|practice auto-starts — shareable direct links
   const [quizId, query] = quizArg.split('?');
   const quiz = await fetchQuiz(quizId);
+  if (isStale(token)) return; // navigated away while fetching
   setContext(quiz.title);
+
+  // a saved session only counts if it still matches the quiz's question ids
+  // (quizzes get regenerated/edited under the same id)
+  let saved = E.loadSession(quizId);
+  if (saved && (!E.sessionValid(quiz, saved) || E.sessionDone(saved))) {
+    E.clearSession(quizId);
+    saved = null;
+  }
 
   const mode = new URLSearchParams(query || '').get('mode');
   if (mode === 'test' || mode === 'practice') {
+    // direct-start link — but never silently wipe an in-progress session
+    // (refreshing a shared link mid-quiz must not lose 40 answers)
+    if (saved) return renderResumeChoice(view, quiz, saved);
     const s = E.newSession(quiz, mode);
     E.saveSession(s);
     return renderQuestion(view, quiz, s);
   }
 
-  const saved = E.loadSession(quizId);
-  if (saved && !E.sessionDone(saved)) {
+  if (saved) {
     renderResumeChoice(view, quiz, saved);
   } else {
     renderStart(view, quiz);
@@ -82,10 +93,12 @@ function renderQuestion(view, quiz, s) {
   if (q.type === 'pin') placePinMarker(view);
 
   const optionsEl = view.querySelector('.options');
+  let correctBtn = null;
   options.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'btn option';
     btn.textContent = opt.text;
+    if (opt.correct) correctBtn = btn;
     btn.addEventListener('click', () => answer(opt, btn));
     optionsEl.appendChild(btn);
   });
@@ -96,14 +109,11 @@ function renderQuestion(view, quiz, s) {
     optionsEl.querySelectorAll('button').forEach(b => (b.disabled = true));
     if (s.mode === 'practice') {
       btn.classList.add(opt.correct ? 'correct' : 'incorrect');
-      if (!opt.correct) {
-        const right = [...optionsEl.children].find(b => b.textContent === correctText(q, options));
-        right?.classList.add('correct');
-      }
+      if (!opt.correct) correctBtn?.classList.add('correct');
       const fb = view.querySelector('.feedback');
       fb.hidden = false;
       fb.className = `feedback ${opt.correct ? 'good' : 'bad'}`;
-      fb.innerHTML = `${opt.correct ? 'Correct.' : `Not quite — it's <strong>${esc(correctText(q, options))}</strong>.`}${q.explanation ? `<p>${esc(q.explanation)}</p>` : ''}`;
+      fb.innerHTML = `${opt.correct ? 'Correct.' : `Not quite — it's <strong>${esc(correctBtn?.textContent ?? '')}</strong>.`}${q.explanation ? `<p>${esc(q.explanation)}</p>` : ''}`;
       view.querySelector('#next').hidden = false;
       view.querySelector('#next').addEventListener('click', () => advance());
     } else {
@@ -117,14 +127,12 @@ function renderQuestion(view, quiz, s) {
   }
 }
 
-function correctText(q, options) {
-  return options.find(o => o.correct).text;
-}
-
 function pinFigure(quiz, q) {
+  // esc() + Number(): quiz.json is data from zips/imports — image paths and
+  // coords must not be able to break out of the attributes
   return `
-    <div class="pin-figure" data-x="${q.pin.x}" data-y="${q.pin.y}">
-      <img src="${quizAsset(quiz, q.image)}" alt="identify the marked structure" draggable="false">
+    <div class="pin-figure" data-x="${Number(q.pin.x) || 0}" data-y="${Number(q.pin.y) || 0}">
+      <img src="${esc(quizAsset(quiz, q.image))}" alt="identify the marked structure" draggable="false">
       <div class="pin-marker" hidden><div class="pin-ring"></div><div class="pin-dot"></div></div>
     </div>`;
 }

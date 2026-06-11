@@ -6,6 +6,8 @@ import { parseTermsText, allTerms } from './gen/parse-terms.js';
 import { generateQuestions } from './gen/templates.js';
 import { esc } from './catalog.js';
 import { setContext } from './app.js';
+import { slug, safeFileName, toBase64, questionId } from './util.js';
+import { validateQuiz } from './validate.js';
 
 const native = typeof window !== 'undefined' ? window.quizStudioNative : null;
 
@@ -21,8 +23,6 @@ async function loadPdfjs() {
     new URL('../node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs', import.meta.url).href;
   return pdfjs;
 }
-
-const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
 
 export async function renderGenerate(view) {
   if (!native) {
@@ -67,9 +67,12 @@ export async function renderGenerate(view) {
     $('#g-log').scrollTop = $('#g-log').scrollHeight;
   };
   const offProgress = native.onProgress(log);
+  let torndown = false;
 
-  // Marcus availability + model picker (live from /api/models)
+  // Marcus availability + model picker (live from /api/models). The probe can
+  // take up to 8s; bail if the user navigated away meanwhile.
   native.marcus.models().then(info => {
+    if (torndown || !view.isConnected) return;
     const status = $('#g-marcus-status');
     if (!info.reachable) {
       status.textContent = 'not reachable (needs David’s tailnet) — built-in mode only';
@@ -104,8 +107,8 @@ export async function renderGenerate(view) {
     }
   });
 
-  // stash cleanup so navigating away stops progress events
-  view.addEventListener('view:teardown', offProgress, { once: true });
+  // stash cleanup so navigating away stops progress events and late callbacks
+  view.addEventListener('view:teardown', () => { torndown = true; offProgress(); }, { once: true });
 }
 
 // --- stage 1: read PDFs/images locally --------------------------------------
@@ -113,7 +116,9 @@ export async function renderGenerate(view) {
 async function readFiles(view, ctx) {
   const { files, log } = ctx;
   let text = '';
-  const pageImages = []; // {name, blob, thumbUrl, pdfRef:{file, pageNum}}
+  const pageImages = []; // {name, blob, thumbUrl, page, pageNum, file}
+  const objectUrls = [];
+  view.addEventListener('view:teardown', () => objectUrls.forEach(URL.revokeObjectURL), { once: true });
 
   for (const file of files) {
     if (/\.pdf$/i.test(file.name)) {
@@ -128,7 +133,8 @@ async function readFiles(view, ctx) {
         for (const item of content.items) {
           if (!item.str?.trim()) continue;
           const y = Math.round(item.transform[5] / 4) * 4;
-          (rows.get(y) || rows.set(y, []).get(y)).push({ x: item.transform[4], str: item.str });
+          if (!rows.has(y)) rows.set(y, []);
+          rows.get(y).push({ x: item.transform[4], str: item.str });
         }
         const lines = [...rows.entries()]
           .sort((a, b) => b[0] - a[0])
@@ -145,7 +151,8 @@ async function readFiles(view, ctx) {
       log(`  ${doc.numPages} page(s).`);
     } else {
       const url = URL.createObjectURL(file);
-      pageImages.push({ name: file.name.toLowerCase().replace(/[^a-z0-9._-]/g, '_'), thumbUrl: url, blob: file, file: file.name });
+      objectUrls.push(url);
+      pageImages.push({ name: safeFileName(file.name), thumbUrl: url, blob: file, file: file.name });
     }
   }
 
@@ -206,7 +213,7 @@ async function generate(view, ctx) {
     await native.marcus.select(model);
     log(`Marcus (${model}) is writing one question per term — ${terms.length} terms…`);
     questions = await native.marcus.writeQuestions(terms);
-    questions.forEach((q, i) => { q.id = `q${String(i + 1).padStart(3, '0')}`; });
+    questions.forEach((q, i) => { q.id = questionId(i + 1); });
     const covered = new Set(questions.map(q => q.options[q.correctIndex].toLowerCase()));
     unmatched = terms.filter(t => !covered.has(t.name.toLowerCase()));
     log(`Marcus wrote ${questions.length} questions (${unmatched.length} terms got none — rerun later or add by hand).`);
@@ -233,14 +240,23 @@ async function generate(view, ctx) {
   // full-res renders of kept figure pages
   const images = [];
   for (const im of keepImages) {
-    let base64;
-    if (im.blob) {
-      base64 = btoa(String.fromCharCode(...new Uint8Array(await im.blob.arrayBuffer())));
-    } else {
-      const dataUrl = await renderPage(im.page, 1.6);
-      base64 = dataUrl.split(',')[1];
-    }
+    // toBase64 chunks the byte array — a plain spread RangeErrors on big images
+    const base64 = im.blob
+      ? toBase64(await im.blob.arrayBuffer())
+      : (await renderPage(im.page, 1.6)).split(',')[1];
     images.push({ name: im.name, base64 });
+  }
+
+  // a quiz with no questions is unplayable (the player would falsely report
+  // "all mastered") and won't validate — keep the figures, refuse to save
+  if (!questions.length) {
+    const stage = view.querySelector('#g-stage2');
+    stage.innerHTML = `<div class="card"><h1>No questions could be generated</h1>
+      <p>None of the ${terms.length} term(s) matched the glossary${engine === 'marcus' ? ' and Marcus returned nothing usable' : ''}.
+      Try the Marcus engine, enable “Use Marcus to write definitions”, or author questions by hand in
+      <a href="#/author">teacher mode</a>.</p></div>`;
+    log('Nothing to save — no questions generated.');
+    return;
   }
 
   const quiz = {
@@ -251,13 +267,21 @@ async function generate(view, ctx) {
     ...(images.length ? { imageCandidates: images.map(i => `images/${i.name}`) } : {}),
     questions,
   };
+  const problems = validateQuiz(quiz);
+  if (problems.length) {
+    // shouldn't happen with the built-in engine, but Marcus output is freer
+    log(`Dropping ${problems.length} invalid question(s) before save…`);
+    quiz.questions = quiz.questions.filter((q, i) => !problems.some(p => p.includes(`question ${i + 1}`)));
+    quiz.questions.forEach((q, i) => { q.id = questionId(i + 1); });
+    if (!quiz.questions.length) { log('All questions were invalid — nothing saved.'); return; }
+  }
   await native.saveDraft(quiz, images);
   log('Saved.');
 
   const stage = view.querySelector('#g-stage2');
   stage.innerHTML = `
     <div class="card">
-      <h1>“${esc(title)}” is ready — ${questions.length} questions</h1>
+      <h1>“${esc(title)}” is ready — ${quiz.questions.length} questions</h1>
       ${unmatched.length ? `<p>${unmatched.length} term(s) had no definition source and got no questions: <em>${esc(unmatched.map(t => t.name).join(', '))}</em>. Add them in teacher mode.</p>` : ''}
       ${images.length ? `<p>${images.length} figure image(s) saved for pin questions — place pins in teacher mode.</p>` : ''}
       <div class="btn-row">

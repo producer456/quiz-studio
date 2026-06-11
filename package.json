@@ -1,6 +1,6 @@
 {
   "name": "quiz-studio",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Anatomy study quizzes — multiple choice + image pin identification, with a retake-missed-until-perfect loop",
   "main": "desktop/main.js",
   "author": "David Sheffield",

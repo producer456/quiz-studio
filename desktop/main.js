@@ -20,22 +20,44 @@ function importedQuizzesDir() {
   return path.join(app.getPath('userData'), 'quizzes');
 }
 
+// Cache the scanned library; the local filesystem only changes through our own
+// save/delete/import handlers, which call invalidateQuizzes().
+let quizDirsCache = null;
+function invalidateQuizzes() { quizDirsCache = null; }
+
 async function readQuizDirs() {
+  if (quizDirsCache) return quizDirsCache;
   // imported quizzes win on id clash so a re-shared fixed quiz replaces the bundled one
   const found = new Map();
   for (const root of [bundledQuizzesDir(), importedQuizzesDir()]) {
     let entries = [];
     try { entries = await fsp.readdir(root, { withFileTypes: true }); } catch { continue; }
-    for (const e of entries) {
-      if (!e.isDirectory()) continue;
-      const dir = path.join(root, e.name);
-      try {
-        const quiz = JSON.parse(await fsp.readFile(path.join(dir, 'quiz.json'), 'utf8'));
-        if (quiz.id === e.name) found.set(quiz.id, { quiz, dir });
-      } catch { /* not a quiz folder */ }
-    }
+    const reads = entries
+      .filter(e => e.isDirectory())
+      .map(async e => {
+        const dir = path.join(root, e.name);
+        try {
+          const quiz = JSON.parse(await fsp.readFile(path.join(dir, 'quiz.json'), 'utf8'));
+          if (quiz.id === e.name) found.set(quiz.id, { quiz, dir });
+        } catch { /* not a quiz folder */ }
+      });
+    await Promise.all(reads);
   }
+  quizDirsCache = found;
   return found;
+}
+
+// Read one quiz by id without scanning the whole library (imported wins).
+async function readOneQuiz(id) {
+  if (!/^[a-z0-9][a-z0-9-]*$/.test(id)) return null;
+  for (const root of [importedQuizzesDir(), bundledQuizzesDir()]) {
+    const dir = path.join(root, id);
+    try {
+      const quiz = JSON.parse(await fsp.readFile(path.join(dir, 'quiz.json'), 'utf8'));
+      if (quiz.id === id) return { quiz, dir };
+    } catch { /* try next root */ }
+  }
+  return null;
 }
 
 ipcMain.handle('quizzes:index', async () => {
@@ -54,8 +76,7 @@ ipcMain.handle('quizzes:index', async () => {
 });
 
 ipcMain.handle('quizzes:read', async (_e, id) => {
-  const found = await readQuizDirs();
-  const hit = found.get(id);
+  const hit = await readOneQuiz(id);
   if (!hit) throw new Error(`No quiz "${id}"`);
   return { quiz: hit.quiz, base: pathToFileURL(hit.dir).href };
 });
@@ -67,7 +88,7 @@ ipcMain.handle('quizzes:read', async (_e, id) => {
 ipcMain.handle('quizzes:saveDraft', async (_e, { quiz, images }) => {
   if (!quiz?.id || !/^[a-z0-9][a-z0-9-]*$/.test(quiz.id)) throw new Error('quiz needs a valid id');
   const dir = path.join(importedQuizzesDir(), quiz.id);
-  const prior = (await readQuizDirs()).get(quiz.id);
+  const prior = await readOneQuiz(quiz.id);
   await fsp.mkdir(path.join(dir, 'images'), { recursive: true });
   if (prior && prior.dir !== dir && fs.existsSync(path.join(prior.dir, 'images'))) {
     await fsp.cp(path.join(prior.dir, 'images'), path.join(dir, 'images'), { recursive: true, force: false }).catch(() => {});
@@ -77,12 +98,15 @@ ipcMain.handle('quizzes:saveDraft', async (_e, { quiz, images }) => {
     const safe = path.basename(img.name);
     await fsp.writeFile(path.join(dir, 'images', safe), Buffer.from(img.base64, 'base64'));
   }
+  invalidateQuizzes();
   return { saved: true, dir };
 });
 
 ipcMain.handle('quizzes:delete', async (_e, id) => {
-  const dir = path.join(importedQuizzesDir(), path.basename(id));
-  await fsp.rm(dir, { recursive: true, force: true });
+  if (!/^[a-z0-9][a-z0-9-]*$/.test(id)) throw new Error('bad quiz id');
+  // only ever delete from the user's own folder, never the bundled originals
+  await fsp.rm(path.join(importedQuizzesDir(), id), { recursive: true, force: true });
+  invalidateQuizzes();
   return { deleted: true };
 });
 
@@ -96,6 +120,25 @@ ipcMain.handle('marcus:models', () => marcus.listModels());
 ipcMain.handle('marcus:select', (e, id) => marcus.selectModel(id, genEmit(e)));
 ipcMain.handle('marcus:fillDefs', (e, terms) => marcus.fillDefinitions(terms, genEmit(e)));
 ipcMain.handle('marcus:writeQuestions', (e, terms) => marcus.writeQuestions(terms, genEmit(e)));
+
+// Structural + safety validation for a foreign quiz zip. The id regex is the
+// security-critical part (it feeds path.join + recursive rm/cp); the rest keeps
+// unplayable/malformed quizzes out of the library. The full per-question
+// validator lives in js/validate.js (ESM, renderer side); this CJS copy is
+// intentionally minimal — just what import needs.
+function validateImportedQuiz(quiz) {
+  const problems = [];
+  if (!quiz || typeof quiz !== 'object') return ['not a quiz object'];
+  if (typeof quiz.id !== 'string' || !/^[a-z0-9][a-z0-9-]*$/.test(quiz.id)) problems.push('quiz id is missing or unsafe');
+  if (!Array.isArray(quiz.questions) || quiz.questions.length === 0) problems.push('quiz has no questions');
+  for (const q of quiz.questions || []) {
+    if (q.type === 'pin' && typeof q.image === 'string' && /["'<>]/.test(q.image)) {
+      problems.push('a pin question has an unsafe image path');
+      break;
+    }
+  }
+  return problems;
+}
 
 async function importQuizZips(win) {
   const { canceled, filePaths } = await dialog.showOpenDialog(win, {
@@ -122,7 +165,9 @@ async function importQuizZips(win) {
 
       for (const src of candidates) {
         const quiz = JSON.parse(await fsp.readFile(path.join(src, 'quiz.json'), 'utf8'));
-        if (!quiz.id || !Array.isArray(quiz.questions)) throw new Error('quiz.json missing id/questions');
+        const problems = validateImportedQuiz(quiz);
+        if (problems.length) throw new Error(problems[0]);
+        // id is now regex-checked, so it can't escape importedQuizzesDir
         const dest = path.join(importedQuizzesDir(), quiz.id);
         await fsp.rm(dest, { recursive: true, force: true });
         await fsp.mkdir(path.dirname(dest), { recursive: true });
@@ -178,7 +223,8 @@ function createWindow() {
     return { action: 'deny' };
   });
 
-  // automated UI verification:
+  // automated UI verification (DEV ONLY — never in a shipped build, where
+  // --exec would be arbitrary code execution in the privileged renderer):
   //   --screenshot=/path.png [--route="#/..."]  capture a view and quit
   //   --exec=/path.js                           run a script in the page, wait
   //                                             for window.__testDone, then
@@ -187,8 +233,8 @@ function createWindow() {
     const a = process.argv.find(x => x.startsWith(`--${name}=`));
     return a ? a.slice(name.length + 3) : null;
   };
-  const shotPath = argval('screenshot');
-  const execPath = argval('exec');
+  const shotPath = !app.isPackaged && argval('screenshot');
+  const execPath = !app.isPackaged && argval('exec');
   if (shotPath || execPath) {
     win.webContents.once('did-finish-load', async () => {
       const route = argval('route');

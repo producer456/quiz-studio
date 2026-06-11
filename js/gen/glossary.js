@@ -55,7 +55,7 @@ function variants(term) {
 }
 
 // bounded edit distance for typo tolerance ("lamboid" → "lambdoid")
-function editDistance(a, b, max) {
+export function editDistance(a, b, max = Infinity) {
   if (Math.abs(a.length - b.length) > max) return max + 1;
   let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
   for (let i = 1; i <= a.length; i++) {

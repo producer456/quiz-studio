@@ -93,13 +93,20 @@ async function chat(message, timeoutMs = 5 * 60 * 1000) {
 const chunk = (arr, n) => Array.from({ length: Math.ceil(arr.length / n) }, (_, i) => arr.slice(i * n, i * n + n));
 const norm = s => String(s).toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
-function editDistance(a, b) {
+// Bounded Levenshtein. Kept separate from js/gen/glossary.js's copy on purpose:
+// this file is CommonJS in the Electron main process, that one is ESM in the
+// renderer — same algorithm, no clean shared module across the boundary.
+function editDistance(a, b, max = Infinity) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
   let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
   for (let i = 1; i <= a.length; i++) {
     const row = [i];
+    let rowMin = i;
     for (let j = 1; j <= b.length; j++) {
       row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      rowMin = Math.min(rowMin, row[j]);
     }
+    if (rowMin > max) return max + 1;
     prev = row;
   }
   return prev[b.length];
@@ -111,8 +118,9 @@ function matchTerm(group, answer) {
   const na = norm(answer);
   let best = null;
   for (const t of group) {
-    const d = editDistance(na, norm(t.name));
-    if (d <= Math.max(2, Math.floor(norm(t.name).length / 5)) && (!best || d < best.d)) best = { d, t };
+    const max = Math.max(2, Math.floor(norm(t.name).length / 5));
+    const d = editDistance(na, norm(t.name), max);
+    if (d <= max && (!best || d < best.d)) best = { d, t };
   }
   return best?.t || null;
 }

@@ -17,7 +17,11 @@ export function shuffle(arr, rng = Math.random) {
 export function buildOptions(quiz, q) {
   const count = quiz.optionCount || 5;
   if (q.type === 'mc') {
-    return shuffle(q.options.map((text, i) => ({ text, correct: i === q.correctIndex })));
+    // clamp a bad correctIndex (hand-edited/imported quizzes) so there is
+    // always exactly one correct option instead of zero
+    const ci = Number.isInteger(q.correctIndex) && q.correctIndex >= 0 && q.correctIndex < q.options.length
+      ? q.correctIndex : 0;
+    return shuffle(q.options.map((text, i) => ({ text, correct: i === ci })));
   }
   const pools = [
     q.distractorPool || [],
@@ -52,9 +56,18 @@ export function newSession(quiz, mode) {
     missed: [],            // ids missed this round
     mastered: [],          // ids answered correctly in any round
     firstTry: {},          // id -> true/false, set on first encounter only
-    roundResults: [],      // this round: {id, pickedText, correct}
-    finishedRounds: [],    // archive of past roundResults
+    roundResults: [],      // this round: {id, correct}
   };
+}
+
+// A saved session is only resumable if it still matches the quiz — quizzes
+// get regenerated/edited under the same id, which renumbers question ids.
+export function sessionValid(quiz, s) {
+  if (!s || !Array.isArray(s.queue) || !Array.isArray(s.mastered)) return false;
+  const ids = new Set(quiz.questions.map(q => q.id));
+  const tracked = new Set([...s.queue, ...s.mastered, ...(s.missed || [])]);
+  if (tracked.size !== ids.size) return false;
+  return [...tracked].every(id => ids.has(id));
 }
 
 export function currentQuestion(quiz, s) {
@@ -66,7 +79,7 @@ export function recordAnswer(s, q, picked) {
   const correct = !!picked.correct;
   if (!(q.id in s.firstTry)) s.firstTry[q.id] = correct;
   if (correct) s.mastered.push(q.id); else s.missed.push(q.id);
-  s.roundResults.push({ id: q.id, pickedText: picked.text, correct });
+  s.roundResults.push({ id: q.id, correct });
   s.pos++;
 }
 
@@ -74,7 +87,6 @@ export function roundDone(s) { return s.pos >= s.queue.length; }
 export function sessionDone(s) { return roundDone(s) && s.missed.length === 0; }
 
 export function nextRound(s) {
-  s.finishedRounds.push({ round: s.round, results: s.roundResults });
   s.round++;
   s.queue = shuffle(s.missed);
   s.missed = [];
@@ -86,12 +98,13 @@ export function nextRound(s) {
 // firstTry drives the "study this" ranking; mastered tracks the loop.
 export function topicReport(quiz, s) {
   const topics = {};
+  const mastered = new Set(s.mastered);
   for (const q of quiz.questions) {
     const t = q.topic || 'General';
     topics[t] ||= { topic: t, total: 0, firstTryCorrect: 0, mastered: 0 };
     topics[t].total++;
     if (s.firstTry[q.id]) topics[t].firstTryCorrect++;
-    if (s.mastered.includes(q.id)) topics[t].mastered++;
+    if (mastered.has(q.id)) topics[t].mastered++;
   }
   return Object.values(topics)
     .map(t => ({ ...t, missRate: 1 - t.firstTryCorrect / t.total }))

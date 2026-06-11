@@ -3,7 +3,9 @@
 // into the app's quiz library; on the web, export a ready-to-publish zip.
 import { fetchQuizIndex, fetchQuiz, quizAsset, esc } from './catalog.js';
 import { buildZip } from './zip.js';
-import { setContext } from './app.js';
+import { setContext, isStale } from './app.js';
+import { slug, safeFileName, toBase64, download, questionId } from './util.js';
+import { validateQuiz } from './validate.js';
 
 const native = typeof window !== 'undefined' ? window.quizStudioNative : null;
 
@@ -20,12 +22,16 @@ function blankDraft() {
   };
 }
 
-export async function renderAuthor(view, params) {
+export async function renderAuthor(view, params, token) {
   setContext('Teacher mode');
 
+  // arriving via ?edit=<id> always loads the saved copy from disk/site —
+  // otherwise a stale in-memory draft (e.g. after regenerating under the same
+  // id) would shadow the freshly saved questions
   const editId = params?.get('edit');
-  if (editId && (!draft || draft.id !== editId)) {
+  if (editId) {
     draft = await fetchQuiz(editId);
+    if (token !== undefined && isStale(token)) return;
     uploadedImages = {};
   }
 
@@ -102,11 +108,13 @@ function renderEditor(view) {
 
   const bind = (id, key, transform = v => v) =>
     view.querySelector(id).addEventListener('input', e => { draft[key] = transform(e.target.value); });
-  bind('#f-id', 'id', v => v.toLowerCase().replace(/[^a-z0-9-]/g, '-'));
+  // slug() trims leading/trailing hyphens so the id always satisfies the
+  // /^[a-z0-9].../ rule that saveDraft and validate.py enforce
+  bind('#f-id', 'id', v => slug(v));
   bind('#f-title', 'title');
   bind('#f-course', 'course');
   bind('#f-desc', 'description');
-  bind('#f-optcount', 'optionCount', v => parseInt(v, 10) || 5);
+  bind('#f-optcount', 'optionCount', v => Math.min(8, Math.max(2, parseInt(v, 10) || 5)));
 
   const list = view.querySelector('#q-list');
   draft.questions.forEach((q, i) => {
@@ -138,23 +146,58 @@ function renderEditor(view) {
     download(`quiz.json`, new Blob([draftJson()], { type: 'application/json' }));
   });
   view.querySelector('#save-app')?.addEventListener('click', async () => {
-    if (!draft.id) return alert('Set an ID first.');
-    const images = Object.entries(uploadedImages).map(([name, data]) => ({ name, base64: toBase64(data) }));
-    await native.saveDraft(stripPrivate(draft), images);
-    uploadedImages = {};
+    const problems = checkDraft();
+    if (problems) return alert(`Can't save yet:\n\n${problems}`);
     const btn = view.querySelector('#save-app');
-    btn.textContent = '✓ Saved';
-    setTimeout(() => (btn.textContent = 'Save to app'), 1500);
+    try {
+      const images = Object.entries(uploadedImages).map(([name, data]) => ({ name, base64: toBase64(data) }));
+      await native.saveDraft(stripPrivate(draft), images);
+      uploadedImages = {};
+      btn.textContent = '✓ Saved';
+      setTimeout(() => (btn.textContent = 'Save to app'), 1500);
+    } catch (err) {
+      alert(`Save failed: ${err.message}`);
+    }
   });
   view.querySelector('#export').addEventListener('click', async () => {
-    if (!draft.id) return alert('Set an ID first — it becomes the folder name.');
+    const problems = checkDraft();
+    if (problems) return alert(`Can't export yet:\n\n${problems}`);
     const enc = new TextEncoder();
     const files = [{ path: `${draft.id}/quiz.json`, data: enc.encode(draftJson()) }];
-    for (const [name, data] of Object.entries(uploadedImages)) {
-      files.push({ path: `${draft.id}/images/${name}`, data });
+    try {
+      for (const [name, data] of await collectImages()) {
+        files.push({ path: `${draft.id}/images/${name}`, data });
+      }
+    } catch (err) {
+      return alert(`Couldn't gather images for the zip: ${err.message}`);
     }
     download(`${draft.id}.zip`, buildZip(files));
   });
+}
+
+// Returns a human-readable problem string, or null if the draft is valid.
+function checkDraft() {
+  if (!draft.id) return 'Set an ID — it becomes the folder name.';
+  const problems = validateQuiz(stripPrivate(draft));
+  return problems.length ? problems.slice(0, 6).map(p => `• ${p}`).join('\n') : null;
+}
+
+// Every image the quiz references → [name, Uint8Array]. In-memory uploads plus
+// images that live on disk/site (when editing an existing quiz, they're not in
+// uploadedImages) fetched back so the exported zip is self-contained.
+async function collectImages() {
+  const out = new Map();
+  for (const [name, data] of Object.entries(uploadedImages)) out.set(name, data);
+  const referenced = new Set(
+    draft.questions.filter(q => q.type === 'pin' && q.image).map(q => q.image.replace(/^images\//, '')));
+  for (const c of draft.imageCandidates || []) referenced.add(c.replace(/^images\//, ''));
+  for (const name of referenced) {
+    if (out.has(name)) continue;
+    const res = await fetch(quizAsset(draft, `images/${name}`));
+    if (!res.ok) throw new Error(`missing image ${name}`);
+    out.set(name, new Uint8Array(await res.arrayBuffer()));
+  }
+  return [...out];
 }
 
 function stripPrivate(q) {
@@ -164,31 +207,20 @@ function stripPrivate(q) {
 }
 function draftJson() { return JSON.stringify(stripPrivate(draft), null, 2); }
 
-function toBase64(bytes) {
-  let s = '';
-  for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-  return btoa(s);
-}
-
-function download(name, blob) {
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = name;
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-}
-
 function nextId() {
   let n = draft.questions.length + 1;
-  while (draft.questions.some(q => q.id === `q${String(n).padStart(3, '0')}`)) n++;
-  return `q${String(n).padStart(3, '0')}`;
+  while (draft.questions.some(q => q.id === questionId(n))) n++;
+  return questionId(n);
 }
 
-// image URL for the editor: in-memory upload, else quiz folder on disk/site
+// image URL for the editor: in-memory upload, else quiz folder on disk/site.
+// Blob URLs are cached per upload so reopening a pin modal doesn't leak one.
+const uploadedUrls = {};
 function editorImageUrl(relPath) {
   const name = relPath.replace(/^images\//, '');
   if (uploadedImages[name]) {
-    return URL.createObjectURL(new Blob([uploadedImages[name]]));
+    uploadedUrls[name] ||= URL.createObjectURL(new Blob([uploadedImages[name]]));
+    return uploadedUrls[name];
   }
   return quizAsset(draft, relPath);
 }
@@ -320,10 +352,10 @@ function pinModal(view) {
   slot.querySelector('#p-upload').addEventListener('change', async e => {
     const file = e.target.files[0];
     if (!file) return;
-    const safe = file.name.toLowerCase().replace(/[^a-z0-9._-]/g, '_');
+    const safe = safeFileName(file.name);
     uploadedImages[safe] = new Uint8Array(await file.arrayBuffer());
     imagePath = `images/${safe}`;
-    img.src = URL.createObjectURL(file);
+    img.src = editorImageUrl(imagePath);
     figure.hidden = false;
   });
   slot.querySelector('#p-candidate')?.addEventListener('change', e => {
